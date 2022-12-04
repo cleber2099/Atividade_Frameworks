@@ -10,39 +10,68 @@ export const getUsers =(_,res)=>{
 };
 export const addUser = (req, res) => {
     const q =
-      "INSERT INTO usuarios(`nome`, `nota1`, `nota2`) VALUES(?)";
+      "INSERT INTO usuarios(`nome`, `nota1`, `nota2`, `media`, `situacao`) VALUES(?)";
   
+   //  situação do aluno:o “aprovado”, média >= 7o “recuperação”, média >= 4 e média < 7o “reprovado”, média < 4
+
+   var soma = parseFloat(req.body.nota1) + parseFloat(req.body.nota2) ;
+    var media = soma / 2;
+    var situacao = "";
+    if(media >= 7){
+        situacao = "aprovado";
+    }else if(media >= 4 && media < 7){
+        situacao = "recuperação";
+    }else{
+        situacao = "reprovado";
+    } 
+
     const values = [
       req.body.nome,
       req.body.nota1,
       req.body.nota2,
-
+      media,
+      situacao
 
     ];
   
     db.query(q, [values], (err) => {
       if (err) return res.json(err);
   
-      return res.status(200).json("Usuário criado com sucesso.");
+      return res.status(200).json("Aluno Adicionado");
     });
   };
 
   export const updateUser = (req, res) => {
     const q =
-      "UPDATE usuarios SET `nome` = ? `nota1` =?,`nota2`=? WHERE `id` = ?";
+      "UPDATE usuarios SET `nome` = ?, `nota1` =?,`nota2`=?, `media`=?, `situacao`=? WHERE `id` = ?";
+    
+      var soma = parseFloat(req.body.nota1) + parseFloat(req.body.nota2) ;
+      var media = soma / 2;
+      var situacao = "";
+      if(media >= 7){
+          situacao = "aprovado";
+      }else if(media >= 4 && media < 7){
+          situacao = "recuperação";
+      }else{
+          situacao = "reprovado";
+      } 
+  
   
     const values = [
+ 
       req.body.nome,
       req.body.nota1,
       req.body.nota2,
-     
- 
+      media,
+      situacao,
+
+
     ];
   
     db.query(q, [...values, req.params.id], (err) => {
       if (err) return res.json(err);
   
-      return res.status(200).json("Usuário atualizado com sucesso.");
+      return res.status(200).json("Aluno atualizado.");
     });
   };
 
@@ -52,7 +81,7 @@ export const addUser = (req, res) => {
     db.query(q, [req.params.id], (err) => {
       if (err) return res.json(err);
   
-      return res.status(200).json("Usuário deletado com sucesso.");
+      return res.status(200).json("Aluno deletado .");
     });
   };
     

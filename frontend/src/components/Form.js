@@ -45,10 +45,10 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
   useEffect(() => {
     if (onEdit) {
       const user = ref.current;
-
       user.nome.value = onEdit.nome;
       user.nota1.value = onEdit.nota1;
       user.nota2.value = onEdit.nota2;
+
 ;
     }
   }, [onEdit]);
@@ -58,10 +58,12 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
 
     const user = ref.current;
 
+
+
     if (
       !user.nome.value||
       !user.nota1.value ||
-      !user.nota2.value
+      !user.nota2.value 
       // ||
 
     ) {
@@ -69,21 +71,26 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
     }
 
     if (onEdit) {
+   
       await axios
         .put("http://localhost:8800/" + onEdit.id, {
           nome: user.nome.value,
           nota1: user.nota1.value,
           nota2: user.nota2.value,
 
+
         })
         .then(({ data }) => toast.success(data))
         .catch(({ data }) => toast.error(data));
     } else {
+      
       await axios
         .post("http://localhost:8800", {
           nome: user.nome.value,
           nota1: user.nota1.value,
           nota2: user.nota2.value,
+
+
 
         })
         .then(({ data }) => toast.success(data))
@@ -93,6 +100,8 @@ const Form = ({ getUsers, onEdit, setOnEdit }) => {
     user.nome.value = "";
     user.nota1.value = "";
     user.nota2.value = "";
+
+
  ;
 
     setOnEdit(null);

@@ -10,8 +10,7 @@ const Table = styled.table`
   padding: 20px;
   box-shadow: 0px 0px 5px #ccc;
   border-radius: 5px;
-  max-width: 1120px;
-  margin: 20px auto;
+  margin: 20px ;
   word-break: break-all;
 `;
 
@@ -67,16 +66,18 @@ const Grid = ({ users, setUsers, setOnEdit }) => {
           <Th>Nome</Th>
           <Th>Nota 1</Th>
           <Th >Nota 2</Th>
-          <Th></Th>
-          <Th></Th>
+          <Th>Media</Th>
+          <Th> Situação</Th>
         </Tr>
       </Thead>
       <Tbody>
         {users.map((item, i) => (
           <Tr key={i}>
-            <Td width="30%">{item.nome}</Td>
-            <Td width="30%">{item.nota1}</Td>
-            <Td width="30%">{item.nota2}</Td>
+            <Td width="20%">{item.nome}</Td>
+            <Td width="20%">{item.nota1}</Td>
+            <Td width="20%">{item.nota2}</Td>
+            <Td width="20%">{item.media}</Td>
+            <Td width="20%">{item.situacao}</Td>
             <Td alignCenter width="5%">
               <FaEdit onClick={() => handleEdit(item)} />
             </Td>
